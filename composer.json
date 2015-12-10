@@ -1,5 +1,5 @@
 {
-    "name": "intagono\\openpay",
+    "name": "intagono/openpay",
     "description": "Library that will be used to connect to OpenPay Payment Gateway",
     "license": "MIT",
     "authors": [
