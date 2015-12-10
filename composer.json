@@ -1,0 +1,22 @@
+{
+    "name": "intagono\\openpay",
+    "description": "Library that will be used to connect to OpenPay Payment Gateway",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Annalicia Ostos Sánchez",
+            "email": "nanita.ostos@gmail.com"
+        },{
+            "name": "Ramiro Alonso Vera Contreras",
+            "email": "raalveco@gmail.com"
+        },{
+            "name": "Adrian Gutiérrez Márquez",
+            "email": "adrianyg7@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Intagono\\Openpay\\": "src/"
+        }
+    }
+}
