@@ -4,14 +4,14 @@
     "license": "MIT",
     "authors": [
         {
+            "name": "Adrian Gutiérrez Márquez",
+            "email": "adrianyg7@gmail.com"
+        },{
             "name": "Annalicia Ostos Sánchez",
             "email": "nanita.ostos@gmail.com"
         },{
             "name": "Ramiro Alonso Vera Contreras",
             "email": "raalveco@gmail.com"
-        },{
-            "name": "Adrian Gutiérrez Márquez",
-            "email": "adrianyg7@gmail.com"
         }
     ],
     "autoload": {
