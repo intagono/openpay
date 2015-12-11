@@ -2,6 +2,8 @@
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use Intagono\Openpay\Openpay;
+use Openpay as OpenpayCore;
 
 class OpenpayServiceProvider extends ServiceProvider {
 
@@ -24,13 +26,13 @@ class OpenpayServiceProvider extends ServiceProvider {
             $merchantId = config('openpay.merchant_id');
             $privayeKey = config('openpay.private_key');
 
-            $openpayCore = \Openpay::getInstance($merchantId, $privayeKey);
+            $openpayCore = OpenpayCore::getInstance($merchantId, $privayeKey);
 
             if ($productionMode) {
-                \Openpay::setProductionMode(true);
+                OpenpayCore::setProductionMode(true);
             }
 
-            return new \Intagono\Openpay\Openpay($openpayCore);
+            return new Openpay($openpayCore);
         });
 
         $this->app->bind('openpay', 'Intagono\Openpay\Openpay');
