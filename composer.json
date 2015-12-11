@@ -19,7 +19,7 @@
             "Intagono\\Openpay\\": "src/"
         },
         "files": [
-            "openpay/Openpay.php"
+            "src/openpay/Openpay.php"
         ]
     }
 }
