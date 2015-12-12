@@ -39,13 +39,7 @@ class OpenpayServiceProvider extends ServiceProvider {
 
         $this->mergeConfigFrom(
             __DIR__ . '/config/openpay.php', 'openpay'
-        );
-
-        AliasLoader::getInstance()->alias(
-            'IntagonoOpenpay',
-            'Intagono\Openpay\OpenpayFacade'
-        );
-    }
+        );    }
 
     /**
      * Publish the plugin configuration.

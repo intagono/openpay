@@ -60,8 +60,7 @@ trait OpenpayExceptionTrait {
         }
         else
         {
-            return response($message, 400);
-            // return back()->withInput()->with('error', $message);
+            return back()->withInput()->with('error', $message);
         }
     }
 
