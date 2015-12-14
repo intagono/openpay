@@ -20,6 +20,26 @@ class Customer {
     }
 
     /**
+     * Retreives the Openpay customer property.
+     *
+     * @return \mixed
+     */
+    public function __get($name)
+    {
+        return $this->coreCustomer->{$name};
+    }
+
+    /**
+     * Update the Openpay customer property.
+     *
+     * @return \void
+     */
+    public function __set($name, $value)
+    {
+        $this->coreCustomer->{$name} = $value;
+    }
+
+    /**
      * Retreives the Openpay customer.
      *
      * @return \OpenpayCustomer
