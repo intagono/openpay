@@ -29,15 +29,7 @@ class Openpay {
         return $this->core;
     }
 
-    /**
-     * Charges a card, store or bank.
-     *
-     * @return \OpenpayCharge
-     */
-    public function charge($chargeRequest)
-    {
-        return $this->core->charges->create($chargeRequest);
-    }
+    //Customers Section
 
     /**
      * Create a new customer.
@@ -62,6 +54,18 @@ class Openpay {
     }
 
     /**
+     * Delete an existing customer.
+     *
+     * @return void
+     */
+    public function deleteCustomer($customerId)
+    {
+        $coreCustomer = $this->core->customers->get($customerId);
+
+        $coreCustomer->delete();
+    }
+
+    /**
      * List of customers.
      *
      * @return array
@@ -69,6 +73,28 @@ class Openpay {
     public function customers(array $findDataRequest)
     {
         return $this->core->customers->getList($findDataRequest);
+    }
+
+    //End Customers Section
+
+    /**
+     * Charges a card, store or bank.
+     *
+     * @return \OpenpayCharge
+     */
+    public function charge($chargeRequest)
+    {
+        return $this->core->charges->create($chargeRequest);
+    }
+
+    /**
+     * Create a new card.
+     *
+     * @return \OpenpayCard
+     */
+    public function createCard($cardData)
+    {
+        return $this->core->cards->add($cardData);
     }
 
 }

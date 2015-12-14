@@ -50,6 +50,16 @@ class Customer {
     }
 
     /**
+     * Save a customer properties.
+     *
+     * @return \OpenpayCustomer
+     */
+    public function save()
+    {
+        $this->coreCustomer->save();
+    }
+
+    /**
      * Update a customer.
      *
      * @return \OpenpayCustomer
@@ -83,6 +93,21 @@ class Customer {
     public function charge($chargeRequest)
     {
         return $this->coreCustomer->charges->create($chargeRequest);
+    }
+
+    /**
+     * Create a new Customer's Card.
+     *
+     * @return \OpenpayCard
+     */
+    public function createCard($cardDataRequest)
+    {
+        return $this->coreCustomer->cards->add($cardDataRequest);
+    }
+
+    public function cards($cardDataRequest = array())
+    {
+        return $this->coreCustomer->cards->getList($cardDataRequest);
     }
 
 }
