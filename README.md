@@ -121,16 +121,7 @@ class Foo {
 Facade
 
 ```php
-<?php
-
-class Bar {
-
-    public function Baz()
-    {
-        $charge = IntagonoOpenpay::charge($chargeRequest);
-    }
-
-}
+$charge = IntagonoOpenpay::charge($chargeRequest);
 ```
 
 ## Outside Laravel
