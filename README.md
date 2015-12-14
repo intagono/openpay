@@ -1,4 +1,4 @@
-# Openpay
+# Intagono Openpay
 
 Library that simplifies the process of [OpenPay Payment Gateway Api](http://www.openpay.mx/)
 
@@ -135,3 +135,7 @@ $openpayCore = \Openpay::getInstance($merchantId, $privayeKey);
 
 $intagonoOpenpay = new \Intagono\Openpay\Openpay($openpayCore);
 ```
+
+## License
+
+[Mit license](https://github.com/intagono/openpay/blob/master/LICENSE)
