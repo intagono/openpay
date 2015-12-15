@@ -192,13 +192,155 @@ class Customer {
 
     //End Cards Section
 
+    //Charges Section
+
     /**
      * Charges a customer.
      *
      * @return \OpenpayCharge
      */
-    public function charge($chargeRequest)
+    public function createCharge($chargeRequest)
     {
         return $this->coreCustomer->charges->create($chargeRequest);
     }
+
+    /**
+     * Charges a customer with a token.
+     *
+     * @return \OpenpayCharge
+     */
+    public function chargeWithTokenOrId($tokenId, $device_session_id, $amount, $description, $order_id = false)
+    {
+        $chargeRequest = array(
+            'method' => 'card',
+            'source_id' => $tokenId,
+            'amount' => $amount,
+            'currency' => 'MXN',
+            'description' => $description,
+            'capture' => true,
+            'device_session_id' => $device_session_id);
+
+        if($order_id){
+            $chargeRequest["order_id"] = $order_id;
+        }
+
+        return $this->coreCustomer->charges->create($chargeRequest);
+    }
+
+    /**
+     * Reserve Charges a customer with a token (preautorization).
+     *
+     * @return \OpenpayCharge
+     */
+    public function reserveWithTokenId($tokenId, $device_session_id, $amount, $description, $order_id = false)
+    {
+        $chargeRequest = array(
+            'method' => 'card',
+            'source_id' => $tokenId,
+            'amount' => $amount,
+            'currency' => 'MXN',
+            'description' => $description,
+            'capture' => false,
+            'device_session_id' => $device_session_id);
+
+        if($order_id){
+            $chargeRequest["order_id"] = $order_id;
+        }
+
+        return $this->coreCustomer->charges->create($chargeRequest);
+    }
+
+    /**
+     * Charges a customer with a new card.
+     *
+     * @return \OpenpayCharge
+     */
+    public function chargeWithNewCard($card, $device_session_id, $amount, $description, $order_id = false)
+    {
+        $chargeRequest = array(
+            'method' => 'card',
+            'card' => $card,
+            'amount' => $amount,
+            'currency' => 'MXN',
+            'description' => $description,
+            'capture' => true,
+            'device_session_id' => $device_session_id);
+
+        if($order_id){
+            $chargeRequest["order_id"] = $order_id;
+        }
+
+        return $this->coreCustomer->charges->create($chargeRequest);
+    }
+
+    /**
+     * Create payment reference for payments in stores.
+     *
+     * Example for due_date 2014-08-01T11:51:23-05:00
+     *
+     * @return \OpenpayCharge
+     */
+    public function storeReferencePayment($amount, $description, $order_id = false, $due_date = false)
+    {
+        $chargeRequest = array(
+            'method' => 'store',
+            'amount' => $amount,
+            'description' => $description);
+
+        if($order_id){
+            $chargeRequest["order_id"] = $order_id;
+        }
+
+        if($due_date){
+            $chargeRequest["due_date"] = $due_date;
+        }
+
+        return $this->coreCustomer->charges->create($chargeRequest);
+    }
+
+    /**
+     * Confirm a reserve charge with the transaction_id.
+     *
+     * @return \OpenpayCharge
+     */
+    public function confirmCharge($transaction_id, $amount)
+    {
+        $charge = $this->coreCustomer->charges->get($transaction_id);
+        return $charge->capture($amount);
+    }
+
+    /**
+     * Refund a charge with the transaction_id.
+     *
+     * @return \OpenpayCharge
+     */
+    public function refundCharge($transaction_id, $description)
+    {
+        $refundData = array('description' => $description);
+
+        $charge = $this->coreCustomer->charges->get($transaction_id);
+        return $charge->refund($refundData);
+    }
+
+    /**
+     * Get a charge with the transaction_id.
+     *
+     * @return \OpenpayCharge
+     */
+    public function charge($transaction_id)
+    {
+        return $this->coreCustomer->charges->get($transaction_id);
+    }
+
+    /**
+     * Get a customer's charges list.
+     *
+     * @return \OpenpayCharge
+     */
+    public function charges($searchParams = array())
+    {
+        return $this->coreCustomer->charges->getList($searchParams);
+    }
+
+    //End Charges Section
 }
