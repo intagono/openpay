@@ -85,6 +85,67 @@ class Customer {
         $this->coreCustomer->delete();
     }
 
+    //Cards Section
+
+    /**
+     * Create a new card.
+     *
+     * @return \OpenpayCard
+     */
+    public function createCard($cardDataRequest)
+    {
+        return $this->coreCustomer->cards->add($cardDataRequest);
+    }
+
+    /**
+     * Create a new card with a token and device session id.
+     *
+     * @return \OpenpayCard
+     */
+    public function createCardWithToken($token, $device_session_id)
+    {
+        $cardDataRequest = array(
+            'token_id' => $token,
+            'device_session_id' => $device_session_id
+        );
+
+        return $this->coreCustomer->cards->add($cardDataRequest);
+    }
+
+    /**
+     * Get an existing card.
+     *
+     * @return \OpenpayCard
+     */
+    public function card($cardId)
+    {
+        return $this->coreCustomer->cards->get($cardId);
+    }
+
+    /**
+     * Delete an existing card.
+     *
+     * @return void
+     */
+    public function deleteCard($cardId)
+    {
+        $card = $this->coreCustomer->card->get($cardId);
+
+        $card->delete();
+    }
+
+    /**
+     * List of cards.
+     *
+     * @return array
+     */
+    public function cards(array $findDataRequest)
+    {
+        return $this->coreCustomer->cards->getList($findDataRequest);
+    }
+
+    //End Cards Section
+
     /**
      * Charges a customer.
      *
@@ -94,20 +155,4 @@ class Customer {
     {
         return $this->coreCustomer->charges->create($chargeRequest);
     }
-
-    /**
-     * Create a new Customer's Card.
-     *
-     * @return \OpenpayCard
-     */
-    public function createCard($cardDataRequest)
-    {
-        return $this->coreCustomer->cards->add($cardDataRequest);
-    }
-
-    public function cards($cardDataRequest = array())
-    {
-        return $this->coreCustomer->cards->getList($cardDataRequest);
-    }
-
 }

@@ -77,6 +77,67 @@ class Openpay {
 
     //End Customers Section
 
+    //Cards Section
+
+    /**
+     * Create a new card.
+     *
+     * @return \OpenpayCard
+     */
+    public function createCard($cardDataRequest)
+    {
+        return $this->core->cards->add($cardDataRequest);
+    }
+
+    /**
+     * Create a new card with a token and device session id.
+     *
+     * @return \OpenpayCard
+     */
+    public function createCardWithToken($token, $device_session_id)
+    {
+        $cardDataRequest = array(
+            'token_id' => $token,
+            'device_session_id' => $device_session_id
+        );
+
+        return $this->core->cards->add($cardDataRequest);
+    }
+
+    /**
+     * Get an existing card.
+     *
+     * @return \OpenpayCard
+     */
+    public function card($cardId)
+    {
+        return $this->core->cards->get($cardId);
+    }
+
+    /**
+     * Delete an existing card.
+     *
+     * @return void
+     */
+    public function deleteCard($cardId)
+    {
+        $card = $this->core->card->get($cardId);
+
+        $card->delete();
+    }
+
+    /**
+     * List of cards.
+     *
+     * @return array
+     */
+    public function cards(array $findDataRequest)
+    {
+        return $this->core->cards->getList($findDataRequest);
+    }
+
+    //End Cards Section
+
     /**
      * Charges a card, store or bank.
      *
@@ -86,15 +147,4 @@ class Openpay {
     {
         return $this->core->charges->create($chargeRequest);
     }
-
-    /**
-     * Create a new card.
-     *
-     * @return \OpenpayCard
-     */
-    public function createCard($cardData)
-    {
-        return $this->core->cards->add($cardData);
-    }
-
 }
