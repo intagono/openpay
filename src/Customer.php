@@ -146,6 +146,52 @@ class Customer {
 
     //End Cards Section
 
+    //Cards Section
+
+    /**
+     * Create a new bank account.
+     *
+     * @return \OpenpayCard
+     */
+    public function createBankAccount($accountDataRequest)
+    {
+        return $this->coreCustomer->bankaccounts->add($accountDataRequest);
+    }
+
+    /**
+     * Get an existing bank account.
+     *
+     * @return \OpenpayBankAccount
+     */
+    public function bankAccount($bankAccountId)
+    {
+        return $this->coreCustomer->bankaccounts->get($bankAccountId);
+    }
+
+    /**
+     * Delete an existing bank account.
+     *
+     * @return void
+     */
+    public function deleteBankAccount($bankAccountId)
+    {
+        $bankAccount = $this->coreCustomer->bankaccounts->get($bankAccountId);
+
+        $bankAccount->delete();
+    }
+
+    /**
+     * List of bank accounts.
+     *
+     * @return array
+     */
+    public function bankAccounts(array $findDataRequest)
+    {
+        return $this->coreCustomer->bankaccounts->getList($findDataRequest);
+    }
+
+    //End Cards Section
+
     /**
      * Charges a customer.
      *
