@@ -138,13 +138,185 @@ class Openpay {
 
     //End Cards Section
 
+    //Charges Section
+
     /**
-     * Charges a card, store or bank.
+     * Charges a customer.
      *
      * @return \OpenpayCharge
      */
-    public function charge($chargeRequest)
+    public function createCharge($chargeRequest)
     {
         return $this->core->charges->create($chargeRequest);
     }
+
+    /**
+     * Charges a customer with a token.
+     *
+     * @return \OpenpayCharge
+     */
+    public function chargeWithTokenOrId($tokenId, $device_session_id, $amount, $description, $order_id = false)
+    {
+        $chargeRequest = array(
+            'method' => 'card',
+            'source_id' => $tokenId,
+            'amount' => $amount,
+            'currency' => 'MXN',
+            'description' => $description,
+            'capture' => true);
+
+        if($device_session_id){
+            $chargeRequest["device_session_id"] = $device_session_id;
+        }
+
+        if($order_id){
+            $chargeRequest["order_id"] = $order_id;
+        }
+
+        return $this->core->charges->create($chargeRequest);
+    }
+
+    /**
+     * Reserve Charges a customer with a token (preautorization).
+     *
+     * @return \OpenpayCharge
+     */
+    public function reserveWithTokenId($tokenId, $device_session_id, $amount, $description, $order_id = false)
+    {
+        $chargeRequest = array(
+            'method' => 'card',
+            'source_id' => $tokenId,
+            'amount' => $amount,
+            'currency' => 'MXN',
+            'description' => $description,
+            'capture' => false);
+
+        if($device_session_id){
+            $chargeRequest["device_session_id"] = $device_session_id;
+        }
+
+        if($order_id){
+            $chargeRequest["order_id"] = $order_id;
+        }
+
+        return $this->core->charges->create($chargeRequest);
+    }
+
+    /**
+     * Charges a customer with a new card.
+     *
+     * @return \OpenpayCharge
+     */
+    public function chargeWithNewCard($card, $device_session_id, $amount, $description, $order_id = false)
+    {
+        $chargeRequest = array(
+            'method' => 'card',
+            'card' => $card,
+            'amount' => $amount,
+            'currency' => 'MXN',
+            'description' => $description,
+            'capture' => true);
+
+        if($device_session_id){
+            $chargeRequest["device_session_id"] = $device_session_id;
+        }
+
+        if($order_id){
+            $chargeRequest["order_id"] = $order_id;
+        }
+
+        return $this->core->charges->create($chargeRequest);
+    }
+
+    /**
+     * Create payment reference for payments in stores.
+     *
+     * Example for due_date 2014-08-01 or 01/08/2014
+     *
+     * @return \OpenpayCharge
+     */
+    public function storeReferencePayment($amount, $description, $order_id = false, $due_date = false, $due_hour = false)
+    {
+        $chargeRequest = array(
+            'method' => 'store',
+            'amount' => $amount,
+            'description' => $description);
+
+        if($order_id){
+            $chargeRequest["order_id"] = $order_id;
+        }
+
+        if($due_date){
+            $date = explode("-", date("Y-m-d"));
+            if(strpos($due_date, "-") !== false){
+                $date = explode("-", $due_date);
+
+                $due_date = $date[0]."-".$date[1]."-".$date[2];
+            }
+            elseif(strpos($due_date, "/") !== false){
+                $date = explode("/", $due_date);
+
+                $due_date = $date[2]."-".$date[1]."-".$date[0];
+            }
+
+            $due_date .= "T";
+
+            if($due_hour){
+                $due_date .= $due_hour;
+            }
+            else {
+                $due_date .= "23:59:59";
+            }
+
+            $chargeRequest["due_date"] = $due_date;
+        }
+
+        return $this->core->charges->create($chargeRequest);
+    }
+
+    /**
+     * Confirm a reserve charge with the transaction_id.
+     *
+     * @return \OpenpayCharge
+     */
+    public function confirmCharge($transaction_id, $amount)
+    {
+        $charge = $this->core->charges->get($transaction_id);
+        return $charge->capture($amount);
+    }
+
+    /**
+     * Refund a charge with the transaction_id.
+     *
+     * @return \OpenpayCharge
+     */
+    public function refundCharge($transaction_id, $description)
+    {
+        $refundData = array('description' => $description);
+
+        $charge = $this->core->charges->get($transaction_id);
+        return $charge->refund($refundData);
+    }
+
+    /**
+     * Get a charge with the transaction_id.
+     *
+     * @return \OpenpayCharge
+     */
+    public function charge($transaction_id)
+    {
+        return $this->core->charges->get($transaction_id);
+    }
+
+    /**
+     * Get a customer's charges list.
+     *
+     * @return \OpenpayCharge
+     */
+    public function charges($searchParams = array())
+    {
+        return $this->core->charges->getList($searchParams);
+    }
+
+    //End Charges Section
 }

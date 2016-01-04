@@ -217,8 +217,11 @@ class Customer {
             'amount' => $amount,
             'currency' => 'MXN',
             'description' => $description,
-            'capture' => true,
-            'device_session_id' => $device_session_id);
+            'capture' => true);
+
+        if($device_session_id){
+            $chargeRequest["device_session_id"] = $device_session_id;
+        }
 
         if($order_id){
             $chargeRequest["order_id"] = $order_id;
@@ -240,8 +243,11 @@ class Customer {
             'amount' => $amount,
             'currency' => 'MXN',
             'description' => $description,
-            'capture' => false,
-            'device_session_id' => $device_session_id);
+            'capture' => false);
+
+        if($device_session_id){
+            $chargeRequest["device_session_id"] = $device_session_id;
+        }
 
         if($order_id){
             $chargeRequest["order_id"] = $order_id;
@@ -263,8 +269,11 @@ class Customer {
             'amount' => $amount,
             'currency' => 'MXN',
             'description' => $description,
-            'capture' => true,
-            'device_session_id' => $device_session_id);
+            'capture' => true);
+
+        if($device_session_id){
+            $chargeRequest["device_session_id"] = $device_session_id;
+        }
 
         if($order_id){
             $chargeRequest["order_id"] = $order_id;
@@ -276,11 +285,12 @@ class Customer {
     /**
      * Create payment reference for payments in stores.
      *
+     * Example for due_date 2014-08-01 or 01/08/2014
      * Example for due_date 2014-08-01T11:51:23-05:00
      *
      * @return \OpenpayCharge
      */
-    public function storeReferencePayment($amount, $description, $order_id = false, $due_date = false)
+    public function storeReferencePayment($amount, $description, $order_id = false, $due_date = false, $due_hour = false)
     {
         $chargeRequest = array(
             'method' => 'store',
@@ -292,6 +302,27 @@ class Customer {
         }
 
         if($due_date){
+            $date = explode("-", date("Y-m-d"));
+            if(strpos($due_date, "-") !== false){
+                $date = explode("-", $due_date);
+
+                $due_date = $date[0]."-".$date[1]."-".$date[2];
+            }
+            elseif(strpos($due_date, "/") !== false){
+                $date = explode("/", $due_date);
+
+                $due_date = $date[2]."-".$date[1]."-".$date[0];
+            }
+
+            $due_date .= "T";
+
+            if($due_hour){
+                $due_date .= $due_hour;
+            }
+            else {
+                $due_date .= "23:59:59";
+            }
+
             $chargeRequest["due_date"] = $due_date;
         }
 
