@@ -209,7 +209,33 @@ class Customer {
      *
      * @return \OpenpayCharge
      */
-    public function chargeWithTokenOrId($tokenId, $device_session_id, $amount, $description, $order_id = false)
+    public function chargeWithToken($tokenId, $device_session_id, $amount, $description, $order_id = false)
+    {
+        $chargeRequest = array(
+            'method' => 'card',
+            'source_id' => $tokenId,
+            'amount' => $amount,
+            'currency' => 'MXN',
+            'description' => $description,
+            'capture' => true);
+
+        if($device_session_id){
+            $chargeRequest["device_session_id"] = $device_session_id;
+        }
+
+        if($order_id){
+            $chargeRequest["order_id"] = $order_id;
+        }
+
+        return $this->coreCustomer->charges->create($chargeRequest);
+    }
+
+    /**
+     * Charges a customer with a token.
+     *
+     * @return \OpenpayCharge
+     */
+    public function chargeWithCardId($tokenId, $device_session_id, $amount, $description, $order_id = false)
     {
         $chargeRequest = array(
             'method' => 'card',
