@@ -410,7 +410,7 @@ class Customer {
      */
     public function createSubscription($subscriptionDataRequest)
     {
-        return $this->core->subscriptions->add($subscriptionDataRequest);
+        return $this->coreCustomer->subscriptions->add($subscriptionDataRequest);
     }
 
     /**
@@ -420,7 +420,7 @@ class Customer {
      */
     public function subscription($subscriptionId)
     {
-        return $this->core->subscriptions->get($subscriptionId);
+        return $this->coreCustomer->subscriptions->get($subscriptionId);
     }
 
     /**
@@ -430,7 +430,7 @@ class Customer {
      */
     public function deleteSubscription($subscriptionId)
     {
-        $subscription = $this->core->subscriptions->get($subscriptionId);
+        $subscription = $this->coreCustomer->subscriptions->get($subscriptionId);
 
         $subscription->delete();
     }
@@ -442,7 +442,7 @@ class Customer {
      */
     public function subscriptions(array $findDataRequest)
     {
-        return $this->core->subscriptions->getList($findDataRequest);
+        return $this->coreCustomer->subscriptions->getList($findDataRequest);
     }
 
     //End Subscriptions Section
