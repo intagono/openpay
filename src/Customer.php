@@ -146,7 +146,7 @@ class Customer {
 
     //End Cards Section
 
-    //Cards Section
+    //Banks Section
 
     /**
      * Create a new bank account.
@@ -190,7 +190,7 @@ class Customer {
         return $this->coreCustomer->bankaccounts->getList($findDataRequest);
     }
 
-    //End Cards Section
+    //End Banks Section
 
     //Charges Section
 

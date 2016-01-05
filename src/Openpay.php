@@ -345,4 +345,96 @@ class Openpay {
     }
 
     //End Charges Section
+
+    //Plans Section
+
+    /**
+     * Create a new plan.
+     *
+     * @return \OpenpayPlan
+     */
+    public function createPlan($planDataRequest)
+    {
+        return $this->core->plans->add($planDataRequest);
+    }
+
+    /**
+     * Get an existing plan.
+     *
+     * @return \OpenpayPlan
+     */
+    public function plan($planId)
+    {
+        return $this->core->plans->get($planId);
+    }
+
+    /**
+     * Delete an existing plan.
+     *
+     * @return void
+     */
+    public function deletePlan($planId)
+    {
+        $plan = $this->core->plans->get($planId);
+
+        $plan->delete();
+    }
+
+    /**
+     * List of plans.
+     *
+     * @return array
+     */
+    public function plans(array $findDataRequest)
+    {
+        return $this->core->plans->getList($findDataRequest);
+    }
+
+    //End Plans Section
+
+    //Subscriptions Section
+
+    /**
+     * Create a new Subscription.
+     *
+     * @return \OpenpaySubscription
+     */
+    public function createSubscription($subscriptionDataRequest)
+    {
+        return $this->core->subscriptions->add($subscriptionDataRequest);
+    }
+
+    /**
+     * Get an existing Subscription.
+     *
+     * @return \OpenpaySubscription
+     */
+    public function subscription($subscriptionId)
+    {
+        return $this->core->subscriptions->get($subscriptionId);
+    }
+
+    /**
+     * Delete an existing Subscription.
+     *
+     * @return void
+     */
+    public function deleteSubscription($subscriptionId)
+    {
+        $subscription = $this->core->subscriptions->get($subscriptionId);
+
+        $subscription->delete();
+    }
+
+    /**
+     * List of Subscriptions.
+     *
+     * @return array
+     */
+    public function subscriptions(array $findDataRequest)
+    {
+        return $this->core->subscriptions->getList($findDataRequest);
+    }
+
+    //End Subscriptions Section
 }
