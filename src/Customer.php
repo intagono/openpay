@@ -400,4 +400,50 @@ class Customer {
     }
 
     //End Charges Section
+
+    //Subscriptions Section
+
+    /**
+     * Create a new Subscription.
+     *
+     * @return \OpenpaySubscription
+     */
+    public function createSubscription($subscriptionDataRequest)
+    {
+        return $this->core->subscriptions->add($subscriptionDataRequest);
+    }
+
+    /**
+     * Get an existing Subscription.
+     *
+     * @return \OpenpaySubscription
+     */
+    public function subscription($subscriptionId)
+    {
+        return $this->core->subscriptions->get($subscriptionId);
+    }
+
+    /**
+     * Delete an existing Subscription.
+     *
+     * @return void
+     */
+    public function deleteSubscription($subscriptionId)
+    {
+        $subscription = $this->core->subscriptions->get($subscriptionId);
+
+        $subscription->delete();
+    }
+
+    /**
+     * List of Subscriptions.
+     *
+     * @return array
+     */
+    public function subscriptions(array $findDataRequest)
+    {
+        return $this->core->subscriptions->getList($findDataRequest);
+    }
+
+    //End Subscriptions Section
 }
