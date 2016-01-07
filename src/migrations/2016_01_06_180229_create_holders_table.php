@@ -29,8 +29,8 @@ class CreateHoldersTable extends Migration
             $table->string('street')->nullable();
             $table->string('colony')->nullable();
             $table->string('zipcode',5)->nullable();
-            $table->string('state')->nullable();
             $table->string('city')->nullable();
+            $table->string('state')->nullable();
             $table->string('country_code',2)->default("MX");
 
             $table->boolean('status')->default(true);
