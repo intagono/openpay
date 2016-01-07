@@ -17,6 +17,7 @@ class CreateCardsTable extends Migration
             $table->engine = 'InnoDB';
 
             $table->increments('id');
+
             $table->string('openpay_id');
             $table->string('customer_id');
 

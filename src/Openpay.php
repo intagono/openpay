@@ -135,11 +135,17 @@ class Openpay {
         $database = config('openpay.database', false);
 
         if($database){
+            echo "DATABASE OK!!<br>";
+
+            echo "COUNT ".Card::whereRaw("openpay_id = '$card->id'")->count()."!!<br>";
+
             if(Card::whereRaw("openpay_id = '$card->id'")->count() == 0){
-                Card::create(
+                dd($card);
+
+                $tmp = Card::create(
                     array(
-                        "customer_id" => $card->customer_id,
                         "openpay_id" => $card->id,
+                        "customer_id" => $card->customer_id,
                         "type" => $card->type,
                         "brand" => $card->brand,
                         "holder_name" => $card->holder_name,
