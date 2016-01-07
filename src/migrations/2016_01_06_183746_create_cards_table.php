@@ -37,7 +37,6 @@ class CreateCardsTable extends Migration
             $table->string('colony')->nullable();
             $table->string('zipcode',5)->nullable();
             $table->string('state')->nullable();
-            $table->string('colony')->nullable();
             $table->string('city')->nullable();
             $table->string('country_code',2)->default("MX");
 
