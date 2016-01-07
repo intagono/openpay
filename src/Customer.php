@@ -101,7 +101,7 @@ class Customer {
 
         if($database){
             if(Card::whereRaw("openpay_id = '$card->id'")->count() == 0){
-                Card::create(
+                $tmp = Card::create(
                     array(
                         "openpay_id" => $card->id,
                         "customer_id" => $this->coreCustomer->id,
@@ -115,6 +115,9 @@ class Customer {
                         "bank_code" => $card->bank_code
                     )
                 );
+
+                $tmp->customer_id = $this->coreCustomer->id;
+                $tmp->save();
             }
         }
 
@@ -139,7 +142,7 @@ class Customer {
 
         if($database){
             if(Card::whereRaw("openpay_id = '$card->id'")->count() == 0){
-                Card::create(
+                $tmp = Card::create(
                     array(
                         "openpay_id" => $card->id,
                         "customer_id" => $this->coreCustomer->id,
@@ -153,6 +156,9 @@ class Customer {
                         "bank_code" => $card->bank_code
                     )
                 );
+
+                $tmp->customer_id = $this->coreCustomer->id;
+                $tmp->save();
             }
         }
 
@@ -172,7 +178,7 @@ class Customer {
 
         if($database){
             if(Card::whereRaw("openpay_id = '$card->id'")->count() == 0){
-                Card::create(
+                $tmp = Card::create(
                     array(
                         "openpay_id" => $card->id,
                         "customer_id" => $this->coreCustomer->id,
@@ -186,6 +192,9 @@ class Customer {
                         "bank_code" => $card->bank_code
                     )
                 );
+
+                $tmp->customer_id = $this->coreCustomer->id;
+                $tmp->save();
             }
         }
 
