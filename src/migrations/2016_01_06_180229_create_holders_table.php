@@ -30,7 +30,6 @@ class CreateHoldersTable extends Migration
             $table->string('colony')->nullable();
             $table->string('zipcode',5);
             $table->string('state');
-            $table->string('colony');
             $table->string('city');
             $table->string('country_code',2)->default("MX");
 
