@@ -49,6 +49,10 @@ class OpenpayServiceProvider extends ServiceProvider {
         $this->publishes([
             __DIR__ . '/config/openpay.php' => config_path('openpay.php')
         ]);
+
+        $this->publishes([
+            __DIR__.'/migrations/' => database_path('migrations')
+        ], 'migrations');
     }
 
     /**
