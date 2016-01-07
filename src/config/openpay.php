@@ -20,5 +20,5 @@ return [
     /*
     | Enable the use of database for Holders, Cards & Bank Accounts
     */
-    'database' => true,
+    'database' => false,
 ];
