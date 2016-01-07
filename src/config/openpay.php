@@ -16,4 +16,9 @@ return [
     | Your Private Key, found in Openpay Dashboard -- Configuration.
     */
     'private_key' => env('OPENPAY_PRIVATE_KEY'),
+
+    /*
+    | Enable the use of database for Holders, Cards & Bank Accounts
+    */
+    'database' => true,
 ];

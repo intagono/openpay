@@ -38,7 +38,8 @@ class OpenpayServiceProvider extends ServiceProvider {
 
         $this->mergeConfigFrom(
             __DIR__ . '/config/openpay.php', 'openpay'
-        );    }
+        );
+    }
 
     /**
      * Publish the plugin configuration.

@@ -1,5 +1,6 @@
 <?php namespace Intagono\Openpay;
 
+use App\Models\Holder;
 use OpenpayApi as OpenpayCore;
 
 class Openpay {
@@ -38,7 +39,23 @@ class Openpay {
      */
     public function createCustomer($customerData)
     {
-        return $this->core->customers->add($customerData);
+        $customer = $this->core->customers->add($customerData);
+
+        $database = config('openpay.database', false);
+
+        if($database){
+            Holder::create(
+                array(
+                    "openpay_id" => $customer->id,
+                    "name" => $customerData["name"],
+                    "last_name" => $customerData["first_name"],
+                    "email" => $customerData["email"],
+                    "phone_number" => $customerData["phone_number"],
+                )
+            );
+        }
+
+        return $customer;
     }
 
     /**
