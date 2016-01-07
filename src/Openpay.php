@@ -147,8 +147,7 @@ class Openpay {
                         "expiration_month" => $card->expiration_month,
                         "expiration_year" => $card->expiration_year,
                         "bank_name" => $card->bank_name,
-                        "bank_code" => $card->bank_code,
-                        "expiration_year" => $card->expiration_year
+                        "bank_code" => $card->bank_code
                     )
                 );
             }
