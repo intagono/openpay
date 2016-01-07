@@ -104,7 +104,7 @@ class Customer {
                 Card::create(
                     array(
                         "openpay_id" => $card->id,
-                        "customer_id" => $card->customer_id,
+                        "customer_id" => $this->coreCustomer->id,
                         "type" => $card->type,
                         "brand" => $card->brand,
                         "holder_name" => $card->holder_name,
@@ -142,7 +142,7 @@ class Customer {
                 Card::create(
                     array(
                         "openpay_id" => $card->id,
-                        "customer_id" => $card->customer_id,
+                        "customer_id" => $this->coreCustomer->id,
                         "type" => $card->type,
                         "brand" => $card->brand,
                         "holder_name" => $card->holder_name,
@@ -175,7 +175,7 @@ class Customer {
                 Card::create(
                     array(
                         "openpay_id" => $card->id,
-                        "customer_id" => $card->customer_id,
+                        "customer_id" => $this->coreCustomer->id,
                         "type" => $card->type,
                         "brand" => $card->brand,
                         "holder_name" => $card->holder_name,
