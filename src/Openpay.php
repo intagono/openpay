@@ -48,7 +48,7 @@ class Openpay {
                 array(
                     "openpay_id" => $customer->id,
                     "name" => $customerData["name"],
-                    "last_name" => $customerData["first_name"],
+                    "last_name" => $customerData["last_name"],
                     "email" => $customerData["email"],
                     "phone_number" => $customerData["phone_number"],
                 )
