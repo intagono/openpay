@@ -18,6 +18,7 @@ class CreateBankAccountsTable extends Migration
 
             $table->increments('id');
             $table->string('openpay_id');
+            $table->string('customer_id');
 
             $table->string('holder_name');
 
