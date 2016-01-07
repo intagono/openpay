@@ -1,5 +1,6 @@
 <?php namespace Intagono\Openpay;
 
+use App\Models\Card;
 use App\Models\Holder;
 use OpenpayApi as OpenpayCore;
 
@@ -44,15 +45,17 @@ class Openpay {
         $database = config('openpay.database', false);
 
         if($database){
-            Holder::create(
-                array(
-                    "openpay_id" => $customer->id,
-                    "name" => $customerData["name"],
-                    "last_name" => $customerData["last_name"],
-                    "email" => $customerData["email"],
-                    "phone_number" => $customerData["phone_number"],
-                )
-            );
+            if(Holder::whereRaw("openpay_id = '$customer->id'")->count() == 0) {
+                Holder::create(
+                    array(
+                        "openpay_id" => $customer->id,
+                        "name" => $customerData["name"],
+                        "last_name" => $customerData["last_name"],
+                        "email" => $customerData["email"],
+                        "phone_number" => $customerData["phone_number"],
+                    )
+                );
+            }
         }
 
         return $customer;
@@ -67,6 +70,22 @@ class Openpay {
     {
         $coreCustomer = $this->core->customers->get($customerId);
 
+        $database = config('openpay.database', false);
+
+        if($database){
+            if(Holder::whereRaw("openpay_id = '$coreCustomer->id'")->count() == 0) {
+                Holder::create(
+                    array(
+                        "openpay_id" => $coreCustomer->id,
+                        "name" => $coreCustomer->name,
+                        "last_name" => $coreCustomer->last_name,
+                        "email" => $coreCustomer->email,
+                        "phone_number" => $coreCustomer->phone_number,
+                    )
+                );
+            }
+        }
+
         return new Customer($coreCustomer);
     }
 
@@ -78,6 +97,14 @@ class Openpay {
     public function deleteCustomer($customerId)
     {
         $coreCustomer = $this->core->customers->get($customerId);
+
+        $database = config('openpay.database', false);
+
+        if($database){
+            if(Holder::whereRaw("openpay_id = '$coreCustomer->id'")->count() > 0) {
+                Holder::whereRaw("openpay_id = '$coreCustomer->id'")->delete();
+            }
+        }
 
         $coreCustomer->delete();
     }
@@ -103,7 +130,31 @@ class Openpay {
      */
     public function createCard($cardDataRequest)
     {
-        return $this->core->cards->add($cardDataRequest);
+        $card = $this->core->cards->add($cardDataRequest);
+
+        $database = config('openpay.database', false);
+
+        if($database){
+            if(Card::whereRaw("openpay_id = '$card->id'")->count() == 0){
+                Card::create(
+                    array(
+                        "customer_id" => $card->customer_id,
+                        "openpay_id" => $card->id,
+                        "type" => $card->type,
+                        "brand" => $card->brand,
+                        "holder_name" => $card->holder_name,
+                        "card_number" => $card->card_number,
+                        "expiration_month" => $card->expiration_month,
+                        "expiration_year" => $card->expiration_year,
+                        "bank_name" => $card->bank_name,
+                        "bank_code" => $card->bank_code,
+                        "expiration_year" => $card->expiration_year
+                    )
+                );
+            }
+        }
+
+        return $card;
     }
 
     /**
@@ -118,7 +169,31 @@ class Openpay {
             'device_session_id' => $device_session_id
         );
 
-        return $this->core->cards->add($cardDataRequest);
+        $card = $this->core->cards->add($cardDataRequest);
+
+        $database = config('openpay.database', false);
+
+        if($database){
+            if(Card::whereRaw("openpay_id = '$card->id'")->count() == 0){
+                Card::create(
+                    array(
+                        "customer_id" => $card->customer_id,
+                        "openpay_id" => $card->id,
+                        "type" => $card->type,
+                        "brand" => $card->brand,
+                        "holder_name" => $card->holder_name,
+                        "card_number" => $card->card_number,
+                        "expiration_month" => $card->expiration_month,
+                        "expiration_year" => $card->expiration_year,
+                        "bank_name" => $card->bank_name,
+                        "bank_code" => $card->bank_code,
+                        "expiration_year" => $card->expiration_year
+                    )
+                );
+            }
+        }
+
+        return $card;
     }
 
     /**
@@ -128,7 +203,31 @@ class Openpay {
      */
     public function card($cardId)
     {
-        return $this->core->cards->get($cardId);
+        $card = $this->core->cards->get($cardId);
+
+        $database = config('openpay.database', false);
+
+        if($database){
+            if(Card::whereRaw("openpay_id = '$card->id'")->count() == 0){
+                Card::create(
+                    array(
+                        "customer_id" => $card->customer_id,
+                        "openpay_id" => $card->id,
+                        "type" => $card->type,
+                        "brand" => $card->brand,
+                        "holder_name" => $card->holder_name,
+                        "card_number" => $card->card_number,
+                        "expiration_month" => $card->expiration_month,
+                        "expiration_year" => $card->expiration_year,
+                        "bank_name" => $card->bank_name,
+                        "bank_code" => $card->bank_code,
+                        "expiration_year" => $card->expiration_year
+                    )
+                );
+            }
+        }
+
+        return $card;
     }
 
     /**
@@ -139,6 +238,14 @@ class Openpay {
     public function deleteCard($cardId)
     {
         $card = $this->core->card->get($cardId);
+
+        $database = config('openpay.database', false);
+
+        if($database){
+            if(Card::whereRaw("openpay_id = '$card->id'")->count() > 0) {
+                Card::whereRaw("openpay_id = '$card->id'")->delete();
+            }
+        }
 
         $card->delete();
     }
