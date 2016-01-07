@@ -19,8 +19,7 @@ class OpenpayServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function register()
-    {
+    public function register(){
         $this->app->singleton('Intagono\Openpay\Openpay', function($app) {
             $productionMode = config('openpay.production_mode');
             $merchantId = config('openpay.merchant_id');
@@ -44,8 +43,7 @@ class OpenpayServiceProvider extends ServiceProvider {
     /**
      * Publish the plugin configuration.
      */
-    public function boot()
-    {
+    public function boot(){
         $this->publishes([
             __DIR__ . '/config/openpay.php' => config_path('openpay.php')
         ]);
@@ -64,8 +62,7 @@ class OpenpayServiceProvider extends ServiceProvider {
      *
      * @return array
      */
-    public function provides()
-    {
+    public function provides(){
         return [
             'openpay',
             'Intagono\Openpay\Openpay',
