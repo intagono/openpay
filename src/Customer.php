@@ -208,7 +208,7 @@ class Customer {
      */
     public function deleteCard($cardId)
     {
-        $card = $this->coreCustomer->card->get($cardId);
+        $card = $this->coreCustomer->cards->get($cardId);
 
         $database = config('openpay.database', false);
 
